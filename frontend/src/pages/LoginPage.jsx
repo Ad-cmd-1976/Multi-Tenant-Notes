@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useAuthStore from '../store/useAuthStore';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -6,9 +7,10 @@ const LoginPage = () => {
     password: ''
   });
 
+  const { login }=useAuthStore();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    login(formData);
   }
 
   return (

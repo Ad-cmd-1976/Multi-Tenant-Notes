@@ -36,7 +36,7 @@ function DashboardPage() {
           <h2 className="font-bold text-lg md:text-xl">
             Welcome!
           </h2>
-          <p className="text-sm text-gray-500 mt-1">Email:</p>
+          <p className="text-sm text-gray-500 mt-1">Email: {user.email}</p>
         </div>
 
         <div className="mb-5 shrink-0">
