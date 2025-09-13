@@ -6,10 +6,6 @@ const TenantSchema=new mongoose.Schema({
         required:true,
         unique:true
     },
-    adminName:{
-        type:String,
-        required:true,
-    },
     users:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
