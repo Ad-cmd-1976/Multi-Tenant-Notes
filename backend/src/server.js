@@ -25,3 +25,5 @@ app.get("/", (req,res)=>{
 })
 
 connectDb();
+
+export default app;
