@@ -15,10 +15,13 @@ const UserSchema=new mongoose.Schema({
         enum: ["admin", "user"],
         default: "user"
     },
-    tenantName:{
-        type: String,
+    tenant:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"tenant",
         required: true
     }
+},{
+    timestamps: true
 });
 
 const UserModel=mongoose.model("user", UserSchema);

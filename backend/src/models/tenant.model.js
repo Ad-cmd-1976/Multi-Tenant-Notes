@@ -3,18 +3,12 @@ import mongoose from 'mongoose';
 const TenantSchema=new mongoose.Schema({
     tenantName:{
         type:String,
+        enum: ["Acme", "Globex"],
         required:true,
         unique:true
     },
-    users:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
-        required:true
-    }],
-    notes:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "note"
-    }]
+},{
+    timestamps: true
 });
 
 const TenantModel=mongoose.model("tenant", TenantSchema);

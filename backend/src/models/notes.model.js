@@ -14,6 +14,11 @@ const NoteSchema=new mongoose.Schema({
         ref: "tenant",
         required:true
     },
+    createdBy:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+        required: true
+    }
 });
 
 const NoteModel=mongoose.model("note", NoteSchema);
