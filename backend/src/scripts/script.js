@@ -21,7 +21,7 @@ const seedDatabase = async () => {
     ]);
     console.log("Cleared existing data.");
 
-    const hashedPassword = await bcrypt.hash(DUMMY_PASSWORD, 10);
+    const hashedPassword = bcrypt.hash(DUMMY_PASSWORD, 10);
 
     const tenants = await TenantModel.insertMany([
       { tenantName: "Acme" },

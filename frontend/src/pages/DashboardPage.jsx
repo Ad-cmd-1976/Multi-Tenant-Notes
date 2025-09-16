@@ -1,29 +1,32 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import useNoteStore from "../store/useNoteStore";
 import useAuthStore from "../store/useAuthStore.js";
-import { Trash2, Pencil, Check } from "lucide-react";
+import { Trash2, Pencil, Check, Lock } from "lucide-react";
 
 function DashboardPage() {
-  const [expandedId, setExpandedId]=useState(null);
-  const [showForm, setShowForm]=useState(false);
-  const [noteData, setNoteData]=useState({
+  const [expandedId, setExpandedId] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [noteData, setNoteData] = useState({
     title: "",
     content: "",
   });
-  const [editingNoteId, setEditingNoteId]=useState(null);
-  const [editData, setEditData]=useState({ title: "", content: "" });
+  const [editingNoteId, setEditingNoteId] = useState(null);
+  const [editData, setEditData] = useState({ title: "", content: "" });
 
-  const { notes, getAllNotes, createNote, deleteNote, updateNote }=useNoteStore();
-  const { user, logout }=useAuthStore();
+  const { notes, getAllNotes, createNote, deleteNote, updateNote } =
+  useNoteStore();
+  const { user, logout } = useAuthStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllNotes();
   }, []);
 
-  const handleCreate=async (noteData)=>{
+  const handleCreate = async (noteData) => {
     await createNote(noteData);
-    setNoteData({ title:'', content:'' });
+    setNoteData({ title: "", content: "" });
   };
 
   const handleStartEdit = (note) => {
@@ -44,15 +47,25 @@ function DashboardPage() {
           <h1 className="text-lg md:text-2xl font-semibold">Dashboard</h1>
           <div
             className="text-sm text-blue-600 hover:underline cursor-pointer"
-            onClick={()=>logout()}
+            onClick={() => logout()}
           >
             Log Out
           </div>
         </div>
 
-        <div className="bg-white rounded-lg p-4 shadow-sm mb-5 shrink-0">
-          <h2 className="font-bold text-lg md:text-xl">Welcome!</h2>
-          <p className="text-sm text-gray-500 mt-1">Email: {user.email}</p>
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-5 shrink-0 flex items-center justify-between">
+          <div>
+            <h2 className="font-bold text-lg md:text-xl">Welcome!</h2>
+            <p className="text-sm text-gray-500 mt-1">Email: {user.email}</p>
+          </div>
+
+          <button
+            onClick={() => navigate("/add-user")}
+            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            <Lock className="w-4 h-4" />
+            <span className="hidden md:inline">Admin</span>
+          </button>
         </div>
 
         <div className="mb-5 shrink-0">
@@ -86,14 +99,16 @@ function DashboardPage() {
                 <textarea
                   placeholder="Enter content"
                   value={noteData.content}
-                  onChange={(e) =>setNoteData({ ...noteData, content: e.target.value })}
+                  onChange={(e) =>
+                    setNoteData({ ...noteData, content: e.target.value })
+                  }
                   rows={4}
                   className="w-full border border-gray-300 rounded-lg p-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <div className="flex justify-end">
                   <button
                     className="w-16 bg-blue-600 text-white rounded-lg py-2 hover:bg-blue-700 transition"
-                    onClick={()=>handleCreate(noteData)}
+                    onClick={() => handleCreate(noteData)}
                   >
                     Create
                   </button>
@@ -113,7 +128,7 @@ function DashboardPage() {
               <motion.div
                 key={note._id}
                 layout
-                onClick={()=>setExpandedId(expandedId === note._id ? null : note._id)}
+                onClick={() =>setExpandedId(expandedId === note._id ? null : note._id)}
                 aria-expanded={expandedId === note._id}
                 className="bg-white rounded-lg p-3 shadow-sm flex items-start justify-between cursor-pointer"
               >
@@ -122,12 +137,16 @@ function DashboardPage() {
                     <>
                       <input
                         value={editData.title}
-                        onChange={(e) =>setEditData({ ...editData, title: e.target.value })}
+                        onChange={(e) =>
+                          setEditData({ ...editData, title: e.target.value })
+                        }
                         className="w-full border-b border-gray-300 p-1 font-medium text-gray-800"
                       />
                       <textarea
                         value={editData.content}
-                        onChange={(e) =>setEditData({ ...editData, content: e.target.value })}
+                        onChange={(e) =>
+                          setEditData({ ...editData, content: e.target.value })
+                        }
                         rows={3}
                         className="w-full mt-2 border border-gray-300 rounded-lg p-2 text-sm text-gray-700"
                       />

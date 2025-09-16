@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx';
+import AddUserPage from './pages/AddUserPage.jsx';
 import useAuthStore from './store/useAuthStore.js';
 import { Toaster } from 'react-hot-toast'
 import './App.css'
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path='/' element={!user ? <LoginPage/> : <Navigate to='/dashboard'/>}></Route>
         <Route path='/dashboard' element={user ? <DashboardPage/> : <Navigate to='/'/>}></Route>
+        <Route path='/add-user' element={user?.role==="admin" ? <AddUserPage/> : <Navigate to='/dashboard'/>}></Route>
       </Routes>
       <Toaster />
     </>
