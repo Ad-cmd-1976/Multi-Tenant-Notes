@@ -26,9 +26,6 @@ app.get("/", (req,res)=>{
     res.send("Status: Ok!");
 })
 
-app.listen(port, ()=>{
-    console.log(`Listening at port: ${port}`);
-    connectDb();
-})
+connectDb();
 
 export default app;
